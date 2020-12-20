@@ -54,9 +54,31 @@ class GameViewControllers: UIViewController {
         super.viewDidLoad()
         
         PlayerNameLb.text = playerNamee + ":"
+        
+        boxTapped(on: box1, type: .boxone)
+        boxTapped(on: box2, type: .boxtwo)
+        boxTapped(on: box3, type: .boxthree)
+        boxTapped(on: box4, type: .boxfour)
+        boxTapped(on: box5, type: .boxfive)
+        boxTapped(on: box6, type: .boxsix)
+        boxTapped(on: box7, type: .boxseven)
+        boxTapped(on: box8, type: .boxeight)
+        boxTapped(on: box9, type: .boxnine)
 
     
     }
-        
-
+    
+    func boxTapped(on imageView: UIImageView, type box: Box) {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.boxClicked(_:)))
+        tap.name = box.rawValue
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tap)
+    }
+    
+    @objc func boxClicked(_ sender: UITapGestureRecognizer) {
+        print("Box: \(sender.name) was clicked")
+    }
+}
+enum Box: String, CaseIterable {
+    case boxone, boxtwo, boxthree, boxfour, boxfive, boxsix, boxseven, boxeight, boxnine
 }
