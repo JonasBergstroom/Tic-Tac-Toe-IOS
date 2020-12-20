@@ -15,6 +15,7 @@
 		2EC13809258BA13500BE1F5B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2EC13807258BA13500BE1F5B /* LaunchScreen.storyboard */; };
 		2EC13814258BA13600BE1F5B /* Tic_Tac_Toe_IOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC13813258BA13600BE1F5B /* Tic_Tac_Toe_IOSTests.swift */; };
 		2EC1381F258BA13600BE1F5B /* Tic_Tac_Toe_IOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC1381E258BA13600BE1F5B /* Tic_Tac_Toe_IOSUITests.swift */; };
+		2EC13838258CBB4C00BE1F5B /* GameViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC13837258CBB4C00BE1F5B /* GameViewControllers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		2EC1381A258BA13600BE1F5B /* Tic-Tac-Toe-IOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tic-Tac-Toe-IOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EC1381E258BA13600BE1F5B /* Tic_Tac_Toe_IOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tic_Tac_Toe_IOSUITests.swift; sourceTree = "<group>"; };
 		2EC13820258BA13600BE1F5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2EC13837258CBB4C00BE1F5B /* GameViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewControllers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				2EC137FC258BA13400BE1F5B /* AppDelegate.swift */,
 				2EC137FE258BA13400BE1F5B /* SceneDelegate.swift */,
 				2EC13800258BA13400BE1F5B /* ViewController.swift */,
+				2EC13837258CBB4C00BE1F5B /* GameViewControllers.swift */,
 				2EC13802258BA13400BE1F5B /* Main.storyboard */,
 				2EC13805258BA13500BE1F5B /* Assets.xcassets */,
 				2EC13807258BA13500BE1F5B /* LaunchScreen.storyboard */,
@@ -258,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EC13838258CBB4C00BE1F5B /* GameViewControllers.swift in Sources */,
 				2EC13801258BA13400BE1F5B /* ViewController.swift in Sources */,
 				2EC137FD258BA13400BE1F5B /* AppDelegate.swift in Sources */,
 				2EC137FF258BA13400BE1F5B /* SceneDelegate.swift in Sources */,
