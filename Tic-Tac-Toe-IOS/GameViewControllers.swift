@@ -191,6 +191,9 @@ class GameViewControllers: UIViewController {
                 if userMatch == valid.count {
                     PlayerScoreLb.text = String((Int(PlayerScoreLb.text ?? "0") ?? 0) + 1)
                     
+                    showToast(controller: self, message : "You won!", seconds: 2.0)
+                
+
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
                         self.resetGame()
                     }
@@ -199,13 +202,22 @@ class GameViewControllers: UIViewController {
                 }else if botMatch == valid.count {
                     BotScoreLb.text = String((Int(BotScoreLb.text ?? "0") ?? 0) + 1)
                     
+                    showToast(controller: self, message : "Bot won!", seconds: 2.0)
+
+                    
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
                         self.resetGame()
                     }
                     
                     
                 }else if botChoices.count + playerChoices.count == 9 {
-                   
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+
+                    showToast(controller: self, message : "Draw!", seconds: 2.0)
+                }
+
+                  
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
                         self.resetGame()
                     }
@@ -258,6 +270,20 @@ class GameViewControllers: UIViewController {
     }
     
 }
+func showToast(controller: UIViewController, message : String, seconds: Double) {
+    let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+    alert.view.backgroundColor = UIColor.black
+    alert.view.alpha = 0.6
+    alert.view.layer.cornerRadius = 15
+
+    controller.present(alert, animated: true)
+
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + seconds) {
+        alert.dismiss(animated: true)
+    }
+}
+
+
 enum Box: String, CaseIterable {
     case boxone, boxtwo, boxthree, boxfour, boxfive, boxsix, boxseven, boxeight, boxnine
 }
