@@ -14,6 +14,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var nameField: UITextField!
     
     
+    
+    @IBOutlet weak var player1namefield: UITextField!
+    
+    @IBOutlet weak var player2namefield: UITextField!
+    
     @IBOutlet weak var startBtn: UIButton!
     
     
@@ -24,11 +29,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
     }
-    
-    
-
-    
-  
     
   
     @IBAction func Started(_ sender: UIButton) {
@@ -44,17 +44,22 @@ class ViewController: UIViewController {
         
     }
     
-      
-        
+
     
- 
+ //   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+   //     nameField.resignFirstResponder()
+   // }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        nameField.resignFirstResponder()
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let controller = segue.destination as? GameViewController1{
+            controller.player1Namee = player1namefield.text
+            controller.player2Namee = player2namefield.text
+
+
+    }
+   
     }
 
 
     }
-    
-    
 
