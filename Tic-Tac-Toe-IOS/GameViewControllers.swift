@@ -89,12 +89,12 @@ class GameViewControllers: UIViewController {
         
         playerChoices.append(Box(rawValue: sender.name!)!)
     
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
             self.checkWin()
         }
      
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
             self.botPlay()
         }
        
@@ -126,7 +126,7 @@ class GameViewControllers: UIViewController {
         botChoices.append(emptySpaces[randIndex])
         
     
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
             self.checkWin()
         
         }
@@ -136,6 +136,7 @@ class GameViewControllers: UIViewController {
 
     }
     
+ 
     func makeMove(_ tappedBox: UIImageView) {
         guard tappedBox.image == nil else {return}
         
@@ -190,38 +191,40 @@ class GameViewControllers: UIViewController {
                 
                 if userMatch == valid.count {
                     PlayerScoreLb.text = String((Int(PlayerScoreLb.text ?? "0") ?? 0) + 1)
+                                    
                     
-                    showToast(controller: self, message : "You won!", seconds: 2.0)
-                
+                    showToast(controller: self, message : "You won!", seconds: 1.5)
+
 
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                        self.resetGame()
-                    }
+                                  self.resetGame()
+                              }
+                    
                     
                     
                 }else if botMatch == valid.count {
                     BotScoreLb.text = String((Int(BotScoreLb.text ?? "0") ?? 0) + 1)
                     
-                    showToast(controller: self, message : "Bot won!", seconds: 2.0)
+                    showToast(controller: self, message : "Bot won!", seconds: 1.5)
 
-                    
+               
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                        self.resetGame()
-                    }
+                                  self.resetGame()
+                              }
                     
                     
                 }else if botChoices.count + playerChoices.count == 9 {
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6){
 
-                    showToast(controller: self, message : "Draw!", seconds: 2.0)
-                }
-
-                  
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                        self.resetGame()
-                    }
+                             showToast(controller: self, message : "Draw!", seconds: 1.5)
+                         }
                     
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                                  self.resetGame()
+                              }
+
                     
                 }
                 
