@@ -99,9 +99,6 @@ class GameViewControllers: UIViewController {
         }
        
         
-        // tappedBox.image = #imageLiteral(resourceName: "clipart4770.png")
-        
-        // print("Box: \(sender.name) was clicked")
     }
     
     func botPlay(){
@@ -141,7 +138,7 @@ class GameViewControllers: UIViewController {
         guard tappedBox.image == nil else {return}
         
         if lastValue == "x"{
-            tappedBox.image = #imageLiteral(resourceName: "computer-icons-letter-download-icons-letter-o-png-34a35391e9a0eef9cd36e5590d551225.png")
+            tappedBox.image = #imageLiteral(resourceName: "O.png")
             lastValue = "o"
         }else{
             tappedBox.image = #imageLiteral(resourceName: "kisspng-letter-alphabet-fire-clip-art-5adc149dc5d909.0403148515243726378104.png")

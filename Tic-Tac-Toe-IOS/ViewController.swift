@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     
     
     
+    
+    
     @IBOutlet weak var player1namefield: UITextField!
     
     @IBOutlet weak var player2namefield: UITextField!
