@@ -12,13 +12,18 @@ class GameViewController1: UIViewController {
     var activePlayer = 1
     
     var gamePlay = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    
+    
+    let winCombinations = [[0,1,2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+    
+    var gameIsActive = true
 
     
     
     
     @IBAction func Game(_ sender: Any) {
         
-        if (gamePlay[(sender as AnyObject).tag-1] == 0) {
+        if (gamePlay[(sender as AnyObject).tag-1] == 0 && gameIsActive == true) {
             
             gamePlay[(sender as AnyObject).tag-1] = activePlayer
 
@@ -34,6 +39,29 @@ class GameViewController1: UIViewController {
                            
                            activePlayer = 1
                        }
+            
+            for combinations in winCombinations {
+                
+                if gamePlay[combinations[0]] != 0 && gamePlay[combinations[0]] == gamePlay[combinations[1]] && gamePlay[combinations[1]] == gamePlay[combinations[2]] {
+                    
+                    gameIsActive = false
+                    
+                    if gamePlay[combinations[0]] == 1 {
+                        
+                        showToast(controller: self, message : "Player 2 won!", seconds: 1.5)
+
+                        
+                        
+                        print("Cross")
+                    }else{
+                        
+                    
+                        showToast(controller: self, message : "Player 1 won!", seconds: 1.5)
+
+                        print("O")
+                    }
+                }
+            }
                        
                    }
 
