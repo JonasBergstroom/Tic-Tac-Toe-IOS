@@ -54,8 +54,15 @@ class GameViewControllers: UIViewController {
     var playerChoices: [Box] = []
     var botChoices: [Box] = []
     
-
-    override func viewDidLoad() {
+    
+    @IBOutlet weak var botTurn: UIImageView!
+    
+    @IBOutlet weak var playerTurn: UIImageView!
+    
+    
+    
+    
+        override func viewDidLoad() {
         super.viewDidLoad()
         
         PlayerNameLb.text = playerNamee + ":"
@@ -69,6 +76,7 @@ class GameViewControllers: UIViewController {
         boxTapped(on: box7, type: .boxseven)
         boxTapped(on: box8, type: .boxeight)
         boxTapped(on: box9, type: .boxnine)
+        
 
     
     }
@@ -77,16 +85,26 @@ class GameViewControllers: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.boxClicked(_:)))
         tap.name = box.rawValue
         imageView.isUserInteractionEnabled = true
+        botTurn.isHidden = true
+        playerTurn.isHidden = false
         imageView.addGestureRecognizer(tap)
     }
     
+    
+    
     @objc func boxClicked(_ sender: UITapGestureRecognizer) {
       
-        
         let tappedBox = getBox(from: sender.name ?? "")
         
-        makeMove(tappedBox)
+        guard tappedBox.image == nil else {return}
+
+      
         
+        makeMove(tappedBox)
+        playerTurn.isHidden = true
+        botTurn.isHidden = false
+
+
         playerChoices.append(Box(rawValue: sender.name!)!)
     
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
@@ -109,11 +127,15 @@ class GameViewControllers: UIViewController {
             if box.image == nil {
                 emptyBox.append(box)
                 emptySpaces.append(name)
+                playerTurn.isHidden = false
+                botTurn.isHidden = true
+
+                
                 
             }
         }
         
-        guard emptySpaces.count > 0 else {return}
+        guard emptyBox.count > 0 else {return}
         
         let randIndex = Int.random(in: 0 ..< emptyBox.count)
         
@@ -136,6 +158,8 @@ class GameViewControllers: UIViewController {
  
     func makeMove(_ tappedBox: UIImageView) {
         guard tappedBox.image == nil else {return}
+
+
         
         if lastValue == "x"{
             tappedBox.image = #imageLiteral(resourceName: "O.png")
@@ -156,10 +180,10 @@ class GameViewControllers: UIViewController {
             let secondRow: [Box] = [.boxfour, .boxfive, .boxsix]
             let thirdRow: [Box] = [.boxseven, .boxeight, .boxnine]
             
-            
-             let firstCol: [Box] = [.boxone, .boxfour, .boxseven]
-             let secondCol: [Box] = [.boxtwo, .boxfive, .boxeight]
-             let thirdCol: [Box] = [.boxthree, .boxsix, .boxnine]
+
+            let firstCol: [Box] = [.boxone, .boxfour, .boxseven]
+            let secondCol: [Box] = [.boxtwo, .boxfive, .boxeight]
+            let thirdCol: [Box] = [.boxthree, .boxsix, .boxnine]
             
             let diagonal1: [Box] = [.boxone, .boxfive, .boxnine]
             let diagonal2: [Box] = [.boxthree, .boxfive, .boxseven]
@@ -181,20 +205,26 @@ class GameViewControllers: UIViewController {
                 let userMatch = playerChoices.filter{
                     valid.contains($0)
                 }.count
-                
+
                 let botMatch = botChoices.filter{
                     valid.contains($0)
                 }.count
-                
+
+
                 if userMatch == valid.count {
                     PlayerScoreLb.text = String((Int(PlayerScoreLb.text ?? "0") ?? 0) + 1)
                                     
                     
                     showToast(controller: self, message : "You won!", seconds: 1.5)
+                    
+                    playerTurn.isHidden = true
+                    botTurn.isHidden = true
+                
 
 
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                                  self.resetGame()
+                        
+                        self.resetGame()
                               }
                     
                     
@@ -203,10 +233,12 @@ class GameViewControllers: UIViewController {
                     BotScoreLb.text = String((Int(BotScoreLb.text ?? "0") ?? 0) + 1)
                     
                     showToast(controller: self, message : "Bot won!", seconds: 1.5)
-
-               
+                  
+                    
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                                  self.resetGame()
+                        self.playerTurn.isHidden = false
+                        self.botTurn.isHidden = true
+                        self.resetGame()
                               }
                     
                     
@@ -236,6 +268,7 @@ class GameViewControllers: UIViewController {
             box.image = nil
             
         }
+        
         
         lastValue = "o"
         playerChoices = []

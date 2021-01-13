@@ -35,7 +35,12 @@ class ViewController: UIViewController {
   
     @IBAction func Started(_ sender: UIButton) {
         
-        guard !nameField.text!.trimmingCharacters(in: .whitespaces).isEmpty else {return}
+        guard !nameField.text!.trimmingCharacters(in: .whitespaces).isEmpty else
+        {return
+            
+            showToast(controller: self, message : "Write a name!", seconds: 1.2)
+            
+        }
         let controller = storyboard?.instantiateViewController(identifier: "gameScenee") as!
         GameViewControllers
         controller.playerNamee = nameField.text
@@ -46,12 +51,20 @@ class ViewController: UIViewController {
         
     }
     
+    func showToastt(controller: UIViewController, message : String, seconds: Double) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.view.backgroundColor = UIColor.black
+        alert.view.alpha = 0.6
+        alert.view.layer.cornerRadius = 15
 
+        controller.present(alert, animated: true)
+
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + seconds) {
+            alert.dismiss(animated: true)
+        }
+    }
     
- //   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-   //     nameField.resignFirstResponder()
-   // }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = segue.destination as? GameViewController1{
             controller.player1Namee = player1namefield.text
