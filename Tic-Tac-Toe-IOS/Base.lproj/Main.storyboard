@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="b95-C2-Kh3">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -580,7 +581,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pngjoy.com_neon-line-colorfulness-transparent-png_2523177" translatesAutoresizingMaskIntoConstraints="NO" id="Yaj-Vx-RE0" userLabel="Player2Turn">
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pngjoy.com_neon-line-colorfulness-transparent-png_2523177" translatesAutoresizingMaskIntoConstraints="NO" id="Yaj-Vx-RE0" userLabel="Player2Turn">
                                 <rect key="frame" x="152" y="124" width="235" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -648,7 +649,7 @@
                                         </state>
                                         <connections>
                                             <action selector="Started:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ytl-wN-CUZ"/>
-                                            <segue destination="awd-9u-mN9" kind="presentation" modalPresentationStyle="fullScreen" id="0DP-cP-ETs"/>
+                                            <segue destination="awd-9u-mN9" kind="presentation" identifier="NameToGame" modalPresentationStyle="fullScreen" id="0DP-cP-ETs"/>
                                         </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HRC-UZ-PpM" userLabel="player1namefield">
@@ -711,11 +712,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OlQ-8i-q7N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="110.76923076923076" y="-1234.1232227488151"/>
+            <point key="canvasLocation" x="97" y="-1234"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="PmW-ch-Pi0"/>
+        <segue reference="NdF-W6-cZn"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Cool Text - Play 373329591704434" width="164" height="88"/>

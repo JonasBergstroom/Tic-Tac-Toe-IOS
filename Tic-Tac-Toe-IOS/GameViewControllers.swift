@@ -24,7 +24,7 @@ class GameViewControllers: UIViewController {
     
     @IBOutlet weak var box2: UIImageView!
     
-
+    
     @IBOutlet weak var box3: UIImageView!
     
     
@@ -47,6 +47,8 @@ class GameViewControllers: UIViewController {
     
     @IBOutlet weak var box9: UIImageView!
     
+    // All the boxes dragged in from the storyboard
+    
     
     var playerNamee: String!
     var lastValue = "o"
@@ -59,10 +61,10 @@ class GameViewControllers: UIViewController {
     
     @IBOutlet weak var playerTurn: UIImageView!
     
+    // The glowing green line that shows the turn of each player
     
     
-    
-        override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         PlayerNameLb.text = playerNamee + ":"
@@ -77,8 +79,8 @@ class GameViewControllers: UIViewController {
         boxTapped(on: box8, type: .boxeight)
         boxTapped(on: box9, type: .boxnine)
         
-
-    
+        
+        
     }
     
     func boxTapped(on imageView: UIImageView, type box: Box) {
@@ -90,32 +92,35 @@ class GameViewControllers: UIViewController {
         imageView.addGestureRecognizer(tap)
     }
     
+    // When a box is tapped the code under it will also be running
     
     
     @objc func boxClicked(_ sender: UITapGestureRecognizer) {
-      
+        
         let tappedBox = getBox(from: sender.name ?? "")
         
         guard tappedBox.image == nil else {return}
-
-      
+        
+        // Checking so you cant click on the same box again
+        
+        
         
         makeMove(tappedBox)
         playerTurn.isHidden = true
         botTurn.isHidden = false
-
-
+        
+        
         playerChoices.append(Box(rawValue: sender.name!)!)
-    
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
             self.checkWin()
         }
-     
-
+        
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){
             self.botPlay()
         }
-       
+        
         
     }
     
@@ -124,12 +129,15 @@ class GameViewControllers: UIViewController {
         var emptySpaces = [Box]()
         for name in Box.allCases{
             let box = getBox(from: name.rawValue)
-            if box.image == nil {
+            
+            if box.image == nil
+            // Also check so the chosen box is not clicked
+            {
                 emptyBox.append(box)
                 emptySpaces.append(name)
                 playerTurn.isHidden = false
                 botTurn.isHidden = true
-
+                
                 
                 
             }
@@ -137,29 +145,33 @@ class GameViewControllers: UIViewController {
         
         guard emptyBox.count > 0 else {return}
         
+        // Prevent the bot to make a move if all the 9 boxes is already chosen
+        
         let randIndex = Int.random(in: 0 ..< emptyBox.count)
         
-    
-            
         makeMove(emptyBox[randIndex])
         botChoices.append(emptySpaces[randIndex])
         
-    
+        // Making the bot chose randomly
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
             self.checkWin()
-        
+            
         }
-     
-     
-    
-
+        
+        
+        
+        
     }
     
- 
+    
     func makeMove(_ tappedBox: UIImageView) {
+        
+        
         guard tappedBox.image == nil else {return}
-
-
+        
+        // Checking so the box has not been selected
+        
         
         if lastValue == "x"{
             tappedBox.image = #imageLiteral(resourceName: "O.png")
@@ -169,97 +181,105 @@ class GameViewControllers: UIViewController {
             lastValue = "x"
         }
         
+        // Making the value changes when a box is tapped
+        
     }
+    
+    
+    
+    func checkWin() {
+        var correct = [[Box]]()
+        
+        let firstRow: [Box] = [.boxone, .boxtwo, .boxthree]
+        let secondRow: [Box] = [.boxfour, .boxfive, .boxsix]
+        let thirdRow: [Box] = [.boxseven, .boxeight, .boxnine]
         
         
+        let firstCol: [Box] = [.boxone, .boxfour, .boxseven]
+        let secondCol: [Box] = [.boxtwo, .boxfive, .boxeight]
+        let thirdCol: [Box] = [.boxthree, .boxsix, .boxnine]
         
-        func checkWin() {
-            var correct = [[Box]]()
-           
-            let firstRow: [Box] = [.boxone, .boxtwo, .boxthree]
-            let secondRow: [Box] = [.boxfour, .boxfive, .boxsix]
-            let thirdRow: [Box] = [.boxseven, .boxeight, .boxnine]
+        let diagonal1: [Box] = [.boxone, .boxfive, .boxnine]
+        let diagonal2: [Box] = [.boxthree, .boxfive, .boxseven]
+        
+        
+        correct.append(firstRow)
+        correct.append(secondRow)
+        correct.append(thirdRow)
+        correct.append(firstCol)
+        correct.append(secondCol)
+        correct.append(thirdCol)
+        correct.append(diagonal1)
+        correct.append(diagonal2)
+        
+        // All the winning combinations
+        
+        for valid in correct
+        
+        {
+            let userMatch = playerChoices.filter{
+                valid.contains($0)
+            }.count
             
-
-            let firstCol: [Box] = [.boxone, .boxfour, .boxseven]
-            let secondCol: [Box] = [.boxtwo, .boxfive, .boxeight]
-            let thirdCol: [Box] = [.boxthree, .boxsix, .boxnine]
+            let botMatch = botChoices.filter{
+                valid.contains($0)
+            }.count
             
-            let diagonal1: [Box] = [.boxone, .boxfive, .boxnine]
-            let diagonal2: [Box] = [.boxthree, .boxfive, .boxseven]
+            // Checking if any of the players got a correct winning combination
+            // If so, it will check who the winning player is
             
-            
-            correct.append(firstRow)
-            correct.append(secondRow)
-            correct.append(thirdRow)
-            correct.append(firstCol)
-            correct.append(secondCol)
-            correct.append(thirdCol)
-            correct.append(diagonal1)
-            correct.append(diagonal2)
-            
-            
-            for valid in correct
-            
-            {
-                let userMatch = playerChoices.filter{
-                    valid.contains($0)
-                }.count
-
-                let botMatch = botChoices.filter{
-                    valid.contains($0)
-                }.count
-
-
-                if userMatch == valid.count {
-                    PlayerScoreLb.text = String((Int(PlayerScoreLb.text ?? "0") ?? 0) + 1)
-                                    
-                    
-                    showToast(controller: self, message : "You won!", seconds: 1.5)
-                    
-                    playerTurn.isHidden = true
-                    botTurn.isHidden = true
+            if userMatch == valid.count {
+                PlayerScoreLb.text = String((Int(PlayerScoreLb.text ?? "0") ?? 0) + 1)
                 
-
-
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                        
-                        self.resetGame()
-                              }
+                
+                showToast(controller: self, message : "You won!", seconds: 1.5)
+                
+                playerTurn.isHidden = true
+                botTurn.isHidden = true
+                
+                // In this case, the player won and will be added 1 point to the score
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
                     
+                    self.resetGame()
+                }
+                
+                
+                
+            }else if botMatch == valid.count {
+                BotScoreLb.text = String((Int(BotScoreLb.text ?? "0") ?? 0) + 1)
+                
+                showToast(controller: self, message : "Bot won!", seconds: 1.5)
+                
+                // In this case, the bot won and will be added 1 point to the score
+                
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                    self.playerTurn.isHidden = false
+                    self.botTurn.isHidden = true
+                    self.resetGame()
+                }
+                
+                
+            }else if botChoices.count + playerChoices.count == 9 {
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6){
                     
-                    
-                }else if botMatch == valid.count {
-                    BotScoreLb.text = String((Int(BotScoreLb.text ?? "0") ?? 0) + 1)
-                    
-                    showToast(controller: self, message : "Bot won!", seconds: 1.5)
-                  
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                        self.playerTurn.isHidden = false
-                        self.botTurn.isHidden = true
-                        self.resetGame()
-                              }
-                    
-                    
-                }else if botChoices.count + playerChoices.count == 9 {
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6){
-
-                             showToast(controller: self, message : "Draw!", seconds: 1.5)
-                         }
-                    
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                                  self.resetGame()
-                              }
-
-                    
+                    showToast(controller: self, message : "Draw!", seconds: 1.5)
+                }
+                
+                // In this case, it is a draw. Because all the boxes together counts to 9, without any valid count.
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                    self.resetGame()
                 }
                 
                 
             }
-
+            
+            
+        }
+        
     }
     
     func resetGame(){
@@ -273,7 +293,7 @@ class GameViewControllers: UIViewController {
         lastValue = "o"
         playerChoices = []
         botChoices = []
-
+        
     }
     
     func getBox(from name: String) -> UIImageView {
@@ -281,25 +301,27 @@ class GameViewControllers: UIViewController {
         
         switch box {
         case .boxone:
-        return box1
+            return box1
         case .boxtwo:
-        return box2
+            return box2
         case .boxthree:
-        return box3
+            return box3
         case .boxfour:
-        return box4
+            return box4
         case .boxfive:
-        return box5
+            return box5
         case .boxsix:
-        return box6
+            return box6
         case .boxseven:
-        return box7
+            return box7
         case .boxeight:
-        return box8
+            return box8
         case .boxnine:
-        return box9
-       
+            return box9
+            
         }
+        
+        // Will get the image view whenever each empty box is chosen by any player
     }
     
 }
@@ -308,17 +330,19 @@ func showToast(controller: UIViewController, message : String, seconds: Double) 
     alert.view.backgroundColor = UIColor.black
     alert.view.alpha = 0.6
     alert.view.layer.cornerRadius = 15
-
+    
     controller.present(alert, animated: true)
-
+    
     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + seconds) {
         alert.dismiss(animated: true)
     }
 }
 
+// Function and design for the toast
 
 enum Box: String, CaseIterable {
     case boxone, boxtwo, boxthree, boxfour, boxfive, boxsix, boxseven, boxeight, boxnine
 }
 
+// Holds the name for each slot 
 
